@@ -1,4 +1,5 @@
 import sys
+import re
 
 class Expression():
     
@@ -9,6 +10,9 @@ class Expression():
     def is_existing_greater_precedence(self, token): 
         top = self.operator_stack[-1]
         if (top in self.PARANTHESIS or token in self.PARANTHESIS):
+            return False
+        
+        if token == top:
             return False
         
         if self.get_greater_precedence(top, token) == top:
@@ -22,21 +26,44 @@ class Expression():
     def perform_operation(self, operand_1, operand_2, operator):
         # operator is a string, while operands are integers
         if operator == '+':
+            if len(self.operator_stack) > 0 and self.operator_stack[-1]=='-':
+                operand_1 = -1 * operand_1
+                return abs(operand_1 + operand_2)
+
             return operand_1 + operand_2
         
         if operator == '-':
+            if len(self.operator_stack) > 0 and self.operator_stack[-1]=='-':
+                operand_1 = -1 * operand_1
+                return abs(operand_1 - operand_2)
+                
             return operand_1 - operand_2
         
         if operator == '*':
+            if len(self.operator_stack) > 0 and self.operator_stack[-1]=='-':
+                operand_1 = -1 * operand_1
+                return abs(operand_1 * operand_2)
+                
             return operand_1 * operand_2
         
         if operator == '/':
+            if len(self.operator_stack) > 0 and self.operator_stack[-1]=='-':
+                operand_1 = -1 * operand_1
+                return abs(operand_1 // operand_2)
+                
             return operand_1 // operand_2
+        
+        return value
+    
+    def get_tokens(self):
+        regular_expression = re.compile('(\d+|[^ 0-9])')
+        return re.findall(regular_expression, self.expression)
         
         
     def prepare_postfix_stacks(self):
-        for token in self.expression:
-            if token.isdigit(): 
+        for token in self.get_tokens():
+            if token.isdigit():
+                
                 self.operand_stack.append(int(token))
                 continue
             
@@ -68,6 +95,11 @@ class Expression():
         
     def evaluate(self):
         while len(self.operator_stack) > 0:
+            if(len(self.operator_stack) == 1 and len(self.operand_stack) == 1):
+                val = str(self.operator_stack.pop()) + str(self.operand_stack.pop())
+                self.operand_stack.append(val)
+                break
+            
             operator = self.operator_stack.pop()
             operand_2 = self.operand_stack.pop()
             operand_1 = self.operand_stack.pop()
