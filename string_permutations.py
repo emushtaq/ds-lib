@@ -22,3 +22,7 @@ def get_permutations(string):
             permutations.add(permutation)
 
     return permutations
+
+
+if __name__ == '__main__':
+    assert get_permutations("a") == set(["a"])
