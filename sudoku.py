@@ -10,7 +10,6 @@ A Sudoku solver
 
 """
 Sample Input:
-
 * * 7 | * 8 * | * 3 *
 * * * | * * * | 2 6 9
 * 6 * | * 1 9 | * * 7
@@ -27,7 +26,6 @@ Sample Input:
 
 """
 Sample Output:
-
 9 4 7 | 6 8 2 | 1 3 5
 1 5 8 | 4 7 3 | 2 6 9
 2 6 3 | 5 1 9 | 8 4 7
@@ -38,8 +36,20 @@ Sample Output:
 ---------------------
 6 2 1 | 7 5 4 | 9 8 3
 5 8 9 | 2 3 1 | 4 7 6
-7 3 4 | 9 6 8 | 5 2 1 
+7 3 4 | 9 6 8 | 5 2 1
 """
 
-sudoku = [[None for i in range(9)] for j in range(9)]
 
+def getInput():
+    input = input()
+    if input == "*":
+        return None
+    return input
+
+
+print("-----------  SUDOKU SOLVER -----------")
+print(" Enter the inputs for the puzzle. Enter '*' where there are no inputs")
+sudoku = [[input() for i in range(9)] for j in range(9)]
+
+for line in sudoku:
+    print(" ".join(line))
