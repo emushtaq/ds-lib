@@ -20,7 +20,7 @@ Sample Input:
 ---------------------
 6 * * | 7 5 * | * 8 *
 * 8 9 | * * * | * * *
-* 3 * | * 6 * | 5 * * 
+* 3 * | * 6 * | 5 * *
 """
 
 
@@ -48,8 +48,32 @@ def getInput():
 
 
 print("-----------  SUDOKU SOLVER -----------")
-print(" Enter the inputs for the puzzle. Enter '*' where there are no inputs")
-sudoku = [[input() for i in range(9)] for j in range(9)]
+# print(" Enter the inputs for the puzzle. Enter '*' when there are no inputs")
+# TODO sudoku = [[input() for i in range(9)] for j in range(9)]
+
+sudoku = [
+    ["*", "*", "7", "*", "8", "*", "*", "3", "*"],
+    ["*", "*", "*", "*", "*", "*", "2", "6", "9"],
+    ["*", "6", "*", "*", "1", "9", "*", "*", "7"],
+    ["*", "9", "2", "*", "4", "*", "*", "*", "*"],
+    ["8", "*", "*", "3", "*", "5", "*", "*", "4"],
+    ["*", "*", "*", "*", "9", "*", "3", "1", "*"],
+    ["6", "*", "*", "7", "5", "*", "*", "8", "*"],
+    ["*", "8", "9", "*", "*", "*", "*", "*", "*"],
+    ["*", "3", "*", "*", "6", "*", "5", "*", "*"]
+]
+
+
+def convert_input(value):
+    if value == "*":
+        return 0
+    else:
+        return int(value)
+
+
+print("Solving the puzzle : ")
+sudoku = [[convert_input(value) for value in line] for line in sudoku]
 
 for line in sudoku:
-    print(" ".join(line))
+    print(line)
+    # print(" ".join(str(line)))
